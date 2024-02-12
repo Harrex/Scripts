@@ -1,0 +1,2 @@
+#!/bin/bash
+sudo sshfs -o allow_other,default_permissions harrek@192.168.0.103:/home/harrek/Shared/ ~/Shared

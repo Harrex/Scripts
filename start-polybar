@@ -1,0 +1,9 @@
+#!/bin/bash
+killall polybar
+if type "xrandr"; then
+    for m in $(xrandr | grep " connected" | cut -d" " -f1); do
+        MONITOR=$m polybar -r bottombar &
+    done
+else
+    polybar -r bottombar &
+fi

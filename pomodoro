@@ -1,0 +1,136 @@
+#!/home/harrek/.nix-profile/bin/python3
+
+import time, os, sys
+
+
+SECONDS_IN_MINUTE = 60
+TOMATO_WIDTH = 30
+
+HELP_MESSAGE = """
+Harrek's pomodoro timer - Help
+By default, the timer will give 20 minutes of work and 5 rest, looping
+forever.
+
+To customise, follow the following
+$ pomodoro {num_cycles} {period name} {period length (minutes)} {period name} {period length (minutes)} ...
+
+If you want it to loop forever, set the number of cycles to zero.
+
+Examples:
+    To create a 20 minute work session, 10 minute rest and 2 minute
+    coffee break, looping 5 times:
+$ pomodoro 5 Work 20 Rest 10 "Coffee Break" 2
+    
+    To create the default behaviour (20 Work, 5 Rest, looping forever):
+$ pomodoro 0 Work 20 Rest 5
+"""
+
+TOMATO = """ 
+                 ⣀            
+                ⣿             
+          ⠛⠻⣶⡆ ⠿ ⣶⠒⠊          
+        ⢀⣀⣴⠾⠛⢹⣶⡤⢶⣿⡟⠶⠦⠄        
+     ⣠⣶⣤⣤⣤⣤⣴⠂⠸⠋⢀⣄⡉⠓ ⠲⣶⣾⣿⣷⣄    
+   ⢀⣾⡿⠋⠁⣠⣤⣿⡟⢀⣠⣾⣿⣿⣿⣷⣶⣤⣼⣿⣿⣿⣿⣆   
+   ⣾⡟ ⣰⣿⣿⣿⣿⣷⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡄  
+  ⢸⡿ ⣼⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇  
+  ⢸⡇⢰⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡇  
+  ⠸⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠁  
+   ⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃   
+    ⠙⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠟⠁    
+      ⠉⠛⠿⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⠋       
+            ⠉⠉⠉⠉⠉⠉⠁           
+"""
+
+
+class Timer:
+    def __init__(self, name="Unnamed", minutes=10):
+        self.name = name
+        self.seconds = minutes * SECONDS_IN_MINUTE
+
+    def display(self) -> str:
+        minutes, mod_seconds = divmod(self.seconds, SECONDS_IN_MINUTE)
+        return f"{self.name} - {minutes}:{mod_seconds}"
+
+    def run(self, before_text: str = ""):
+        while self.seconds > 0:
+            final_string = f"{before_text} | {self.display()}"
+            final_string_position = int(max((TOMATO_WIDTH - len(final_string)) / 2, 0))
+            print(f"{final_string_position * ' '}{final_string}", end="\r")
+            try:
+                self.seconds -= 1
+                time.sleep(1)
+            except KeyboardInterrupt:
+                user_input = input("\r  PAUSED - q: quit, s: skip")
+                print("\033[A\033[2K", end="")
+                if user_input == "q":
+                    exit()
+                elif user_input == "s":
+                    return
+
+
+
+class TimePeriod:
+    def __init__(self, name="Unnamed", minutes=10, color: int = 0):
+        self.name = name
+        self.minutes = minutes
+        self.color = color
+
+    def make_timer(self) -> Timer:
+        return Timer(self.name, self.minutes)
+
+
+class Pomodoro:
+    def __init__(self, time_periods: [TimePeriod]):
+        self.time_periods = time_periods
+
+    def run(self, num_iterations=0, print_tomato=True, clear_screen=True):
+
+        if num_iterations:
+            current_iteration = 1
+            while current_iteration <= num_iterations:
+                before_text = f"{current_iteration} / {num_iterations}"
+                for time_period in time_periods:
+                    if clear_screen:
+                        os.system("clear")
+                    if print_tomato:
+                        print(f"\033[{time_period.color}m{TOMATO}\033[0m")
+                    current_timer = time_period.make_timer()
+                    current_timer.run(before_text)
+
+                current_iteration += 1
+        else:
+            current_iteration = 1
+            while True:
+                before_text = f"{current_iteration} / ∞"
+                for time_period in time_periods:
+                    if clear_screen:
+                        os.system("clear")
+                    if print_tomato:
+                        print(f"\033[{time_period.color}m{TOMATO}\033[0m")
+                    current_timer = time_period.make_timer()
+                    current_timer.run(before_text)
+
+                current_iteration += 1
+
+args = sys.argv
+if len(args) == 1:
+    time_periods = [TimePeriod("Work", 20, 34), TimePeriod("Break", 5, 35)]
+    num_iterations = 0
+else:
+    if args[1] == "-h" or args[1] == "--help":
+        print(HELP_MESSAGE)
+        exit()
+    num_iterations = int(args[1])
+    if len(args) == 2:
+        time_periods = [TimePeriod("Work", 20, 34), TimePeriod("Break", 20, 35)]
+    else:
+        time_periods = []
+        current_arg = 2
+        while current_arg < (len(args) - 1):
+            time_periods.append(TimePeriod(args[current_arg], int(args[current_arg + 1])))
+            current_arg += 2
+
+
+timer = Pomodoro(time_periods)
+timer.run(num_iterations=num_iterations, clear_screen=True)
