@@ -14,7 +14,7 @@ case x"$@" in
     ;;
 
   x"logout")
-    pkill Xorg
+      pkill -u $(whoami)
     exit 0
   ;;
 

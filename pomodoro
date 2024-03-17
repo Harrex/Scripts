@@ -1,4 +1,4 @@
-#!/home/harrek/.nix-profile/bin/python3
+#!/usr/bin/python3
 
 import time, os, sys
 

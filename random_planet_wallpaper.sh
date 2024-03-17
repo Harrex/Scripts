@@ -14,5 +14,5 @@ else
     selected_theme="$CURRENT_WALLPAPER"
 fi
 
-notify-send 'Theme Changed'
-/home/harrek/Scripts/refresh_wal.sh "$selected_theme" "$1"
+notify-send "Theme Changed: $(basename $selected_theme)"
+/home/harrek/Scripts/refresh_wal.sh "$selected_theme" "$1" "$2"

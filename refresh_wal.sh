@@ -24,4 +24,5 @@ echo $image > ~/.config/hypr/default_wallpaper
 
 makoctl reload
 /home/harrek/Scripts/chromium-pywal/chromium-pywal.sh
-pkill waybar; waybar
+pkill waybar; waybar -c ~/.config/waybar/YoRHA/config.jsonc -s ~/.config/waybar/YoRHA/style.css
+# pkill waybar; waybar
