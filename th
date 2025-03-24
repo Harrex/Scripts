@@ -1,0 +1,17 @@
+#!/bin/env python3
+import os, sys
+try:
+    filename = sys.argv[1]
+    extension = filename.split('.')[-1]
+except IndexError:
+    print("Bad arguments");
+
+TEMPLATE_PATH = "~/Templates"
+for i in os.scandir(os.path.expanduser(TEMPLATE_PATH)):
+    if extension == i.name:
+        print(i.name)
+        with open(filename, 'w') as f, open(i.path, 'r') as r:
+            f.write(r.read())
+            exit()
+with open(filename, 'w') as f:
+    f.write("")
