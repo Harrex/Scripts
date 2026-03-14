@@ -1,0 +1,27 @@
+rm: cannot remove '/home/zari/.cache/wal/': No such file or directory
+[[1;32mI[0m] [1;31mimage[0m: Using image [1;37mwallpaper[0m.
+[[1;32mI[0m] [1;31mcolors[0m: Generating a colorscheme.
+[[1;32mI[0m] [1;31mcolors[0m: Using wal backend.
+WARNING: The convert command is deprecated in IMv7, use "magick" instead of "convert" or "magick convert"
+
+[[1;32mI[0m] [1;31mcolors[0m: Generation complete.
+[[1;32mI[0m] [1;31mwallpaper[0m: Set the new wallpaper.
+[[1;32mI[0m] [1;31msequences[0m: Set terminal colors.
+[[1;32mI[0m] [1;31mexport[0m: Exported all files.
+[[1;32mI[0m] [1;31mexport[0m: Exported all user files.
+[[1;32mI[0m] [1;31mreload[0m: Reloaded environment.
+[[1;33mW[0m] [1;31mreload[0m: GTK2 reload support requires Python 2.
+[2026-03-07 20:16:43.263] [info] Using configuration file /home/zari/.config/waybar/config.jsonc
+[2026-03-07 20:16:43.264] [info] Unable to receive desktop appearance: GDBus.Error:org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.Settings” on object at path /org/freedesktop/portal/desktop
+[2026-03-07 20:16:43.264] [info] Using CSS file /etc/xdg/waybar/style.css
+[2026-03-07 20:16:43.267] [info] Hyprland IPC starting
+[2026-03-07 20:16:43.268] [info] Loading persistent workspaces from Hyprland workspace rules
+[2026-03-07 20:16:43.269] [warning] There is no configuration for 'custom/rofi', element will be hidden
+[2026-03-07 20:16:43.269] [warning] There is no configuration for 'custom/keyboardtoggle', element will be hidden
+Charging
+[2026-03-07 20:16:43.301] [info] Bar configured (width: 2256, height: 24) for output: eDP-1
+[0.167] [glfw error 65544]: process_desktop_settings: failed with error: org.freedesktop.DBus.Error.UnknownMethod: No such interface “org.freedesktop.portal.Settings” on object at path /org/freedesktop/portal/desktop
+[0.167] [glfw error 65544]: Notify: Failed to get server capabilities error: org.freedesktop.DBus.Error.NameHasNoOwner: Could not activate remote peer 'org.freedesktop.Notifications': activation request failed: unit is invalid
+[2026-03-07 20:16:45.273] [info] Hyprland config reloaded, reinitializing hyprland/workspaces module...
+ok
+[2026-03-07 20:16:45.276] [info] Loading persistent workspaces from Hyprland workspace rules
