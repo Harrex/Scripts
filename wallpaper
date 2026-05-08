@@ -1,3 +1,4 @@
 #!/bin/zsh
+echo $1
 ln -sf $(realpath $1) $HOME/wallpaper
 nohup $HOME/Scripts/theme.sh & disown

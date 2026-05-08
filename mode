@@ -1,0 +1,12 @@
+#!/bin/zsh
+rm -r ~/.cache/wal/
+
+file=$HOME/Wallpapers/themes/$1
+
+wal --theme $file.json
+wallpaper_path=$(jq -r ".wallpaper" $file.json)
+
+pkill hyprpaper; pkill waybar
+hyprpaper -c $file.paper & waybar & disown
+
+hyprctl reload
